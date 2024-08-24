@@ -1,5 +1,13 @@
+import IconArrow from './assets/icons/iconArrow';
+import Homepage from './pages/homepage';
+
 function App() {
-	return <h1 className='text-red-200'>WOII</h1>;
+	return (
+		<>
+			<IconArrow />
+			<Homepage />
+		</>
+	);
 }
 
 export default App;
