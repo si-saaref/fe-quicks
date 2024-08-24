@@ -1,17 +1,10 @@
-import { FloatButton } from 'antd';
-import IconArrow from '../assets/icons/iconArrow';
+import IconThunder from '../assets/icons/iconThunder';
+import FloatButton from '../components/atoms/floatButton';
 
 export default function Homepage() {
 	return (
 		<main>
-			<FloatButton
-				shape='circle'
-				type='primary'
-				style={{
-					insetInlineEnd: 94,
-				}}
-				icon={<IconArrow />}
-			/>
+			<FloatButton className='bg-main-blue' icon={<IconThunder className='fill-white' />} />
 		</main>
 	);
 }
