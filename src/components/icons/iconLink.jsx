@@ -1,7 +1,7 @@
 export default function IconLink({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='26'
 			height='13'
 			viewBox='0 0 26 13'

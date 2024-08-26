@@ -1,7 +1,7 @@
 export default function IconBooks({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='29'
 			height='22'
 			viewBox='0 0 29 22'

@@ -1,7 +1,7 @@
 export default function IconBookmark({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='22'
 			height='28'
 			viewBox='0 0 22 28'

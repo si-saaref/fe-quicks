@@ -1,7 +1,7 @@
 export default function IconPencil({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='24'
 			height='23'
 			viewBox='0 0 24 23'

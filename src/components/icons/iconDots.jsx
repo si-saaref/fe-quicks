@@ -1,7 +1,7 @@
 export default function IconDots({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='21'
 			height='6'
 			viewBox='0 0 21 6'

@@ -1,7 +1,7 @@
 export default function IconThunder({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='18'
 			height='32'
 			viewBox='0 0 18 32'

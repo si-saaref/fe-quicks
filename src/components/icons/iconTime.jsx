@@ -1,7 +1,7 @@
 export default function IconTime({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='31'
 			height='31'
 			viewBox='0 0 31 31'

@@ -1,7 +1,7 @@
 export default function IconTask({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='15'
 			height='18'
 			viewBox='0 0 15 18'

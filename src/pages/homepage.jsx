@@ -1,10 +1,11 @@
-import IconThunder from '../assets/icons/iconThunder';
-import FloatButton from '../components/atoms/floatButton';
+import ActionFloatButton from '../components/molecules/actionFloatButton';
+import InboxSidebar from '../components/organisms/inboxSidebar';
 
 export default function Homepage() {
 	return (
-		<main>
-			<FloatButton className='bg-main-blue' icon={<IconThunder className='fill-white' />} />
+		<main className='bg-[#333] w-screen h-screen'>
+			<InboxSidebar />
+			<ActionFloatButton />
 		</main>
 	);
 }

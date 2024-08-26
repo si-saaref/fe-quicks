@@ -1,7 +1,7 @@
 export default function IconSearch({ className }) {
 	return (
 		<svg
-			className={className}
+			className={`fill-black ${className}`}
 			width='32'
 			height='31'
 			viewBox='0 0 32 31'

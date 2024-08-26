@@ -1,7 +1,7 @@
 export default function IconArrow({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='32'
 			height='31'
 			viewBox='0 0 32 31'

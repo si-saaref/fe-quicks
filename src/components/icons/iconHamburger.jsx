@@ -1,7 +1,7 @@
 export default function IconHamburger({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='23'
 			height='14'
 			viewBox='0 0 23 14'

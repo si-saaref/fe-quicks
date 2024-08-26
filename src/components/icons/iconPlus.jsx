@@ -1,7 +1,7 @@
 export default function IconPlus({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='19'
 			height='18'
 			viewBox='0 0 19 18'

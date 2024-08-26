@@ -1,7 +1,7 @@
 export default function IconClose({ className }) {
 	return (
 		<svg
-			className={className}
+			className={className ?? 'fill-black'}
 			width='21'
 			height='21'
 			viewBox='0 0 21 21'
