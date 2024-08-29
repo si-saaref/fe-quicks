@@ -1,7 +1,8 @@
-export default function IconChats({ className }) {
+export default function IconChats({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='26'
 			height='26'
 			viewBox='0 0 26 26'

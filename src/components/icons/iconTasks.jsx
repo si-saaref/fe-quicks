@@ -1,7 +1,8 @@
-export default function IconBooks({ className }) {
+export default function IconBooks({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='29'
 			height='22'
 			viewBox='0 0 29 22'

@@ -1,7 +1,8 @@
-export default function IconTime({ className }) {
+export default function IconTime({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='31'
 			height='31'
 			viewBox='0 0 31 31'

@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FloatButton from '../atoms/floatButton';
+import IconTasks from '../icons/iconTasks';
+import IconChats from '../icons/iconChats';
 import IconThunder from '../icons/iconThunder';
 
-export default function ActionFloatButton() {
+export default function ActionFloatButton({ handleChangeTab, currentTab }) {
 	const [isShowListMenu, setIsShowListMenu] = useState(false);
+	const [activeButton, setActiveButton] = useState({});
+
+	useEffect(() => {
+		setActiveButton(getActiveButton(currentTab));
+	}, [currentTab]);
 
 	const onClickMenuHome = () => {
 		setIsShowListMenu(true);
@@ -12,15 +19,49 @@ export default function ActionFloatButton() {
 	return (
 		<div className='flex flex-row-reverse absolute bottom-10 right-10 items-center gap-5'>
 			<FloatButton
-				className='bg-main-blue'
-				icon={<IconThunder className='fill-white' />}
+				className={`${activeButton?.bg} z-10 `}
+				icon={activeButton?.icon}
 				active
 				onClick={onClickMenuHome}
 			/>
-			<div className={`${isShowListMenu ? 'flex gap-5' : 'sticky right-0 flex'}`}>
-				<FloatButton className='bg-white' icon={<IconThunder className='fill-main-purple' />} />
-				<FloatButton className='bg-white' icon={<IconThunder className='fill-main-orange' />} />
+			<div
+				className={`${
+					isShowListMenu ? 'flex flex-row-reverse gap-5' : 'absolute right-1 flex h-14'
+				}`}
+			>
+				{currentTab !== 'chat' && (
+					<FloatButton
+						className={`bg-white ${!isShowListMenu ? 'absolute right-0' : ''}`}
+						icon={<IconChats className='fill-main-purple' />}
+						onClick={() => handleChangeTab('chat')}
+					/>
+				)}
+				{currentTab !== 'task' && (
+					<FloatButton
+						className={`bg-white ${!isShowListMenu ? 'absolute right-0' : ''}`}
+						icon={<IconTasks className='fill-main-orange' />}
+						onClick={() => handleChangeTab('task')}
+					/>
+				)}
 			</div>
 		</div>
 	);
 }
+
+const getActiveButton = (activeButton) => {
+	const listButton = {
+		chat: {
+			icon: <IconChats className='fill-white' />,
+			bg: 'bg-main-purple',
+		},
+		task: {
+			icon: <IconTasks className='fill-white' />,
+			bg: 'bg-main-orange',
+		},
+		default: {
+			icon: <IconThunder className='fill-white' />,
+			bg: 'bg-main-blue',
+		},
+	};
+	return listButton[activeButton] || listButton.default;
+};

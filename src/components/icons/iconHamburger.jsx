@@ -1,7 +1,8 @@
-export default function IconHamburger({ className }) {
+export default function IconHamburger({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='23'
 			height='14'
 			viewBox='0 0 23 14'

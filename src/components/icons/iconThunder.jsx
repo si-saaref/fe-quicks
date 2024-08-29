@@ -1,7 +1,8 @@
-export default function IconThunder({ className }) {
+export default function IconThunder({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='18'
 			height='32'
 			viewBox='0 0 18 32'

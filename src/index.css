@@ -7,3 +7,38 @@
 		font-family: 'Lato', sans-serif;
 	}
 }
+
+.custom-scrollbar {
+	@apply h-full overflow-y-scroll;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+	height: 5px;
+	width: 10px;
+	background: transparent;
+}
+
+textarea::-webkit-scrollbar {
+	display: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb {
+	background: #bdbdbd;
+	border-radius: 10px;
+}
+
+.loader-spin-msg-warning {
+	width: 35px;
+	height: 35px;
+	animation: spin-scale-30 2s linear infinite;
+}
+
+@keyframes spin-scale-30 {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}

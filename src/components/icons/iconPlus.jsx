@@ -1,7 +1,8 @@
-export default function IconPlus({ className }) {
+export default function IconPlus({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='19'
 			height='18'
 			viewBox='0 0 19 18'

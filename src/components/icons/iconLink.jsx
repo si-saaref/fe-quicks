@@ -1,7 +1,8 @@
-export default function IconLink({ className }) {
+export default function IconLink({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='26'
 			height='13'
 			viewBox='0 0 26 13'

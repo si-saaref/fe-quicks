@@ -1,6 +1,7 @@
-export default function IconSearch({ className }) {
+export default function IconSearch({ className, onClick }) {
 	return (
 		<svg
+			onClick={onClick}
 			className={`fill-black ${className}`}
 			width='32'
 			height='31'

@@ -1,7 +1,8 @@
-export default function IconPencil({ className }) {
+export default function IconPencil({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='24'
 			height='23'
 			viewBox='0 0 24 23'

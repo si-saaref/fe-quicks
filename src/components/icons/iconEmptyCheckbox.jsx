@@ -1,7 +1,8 @@
-export default function IconEmptyCheckbox({ className }) {
+export default function IconEmptyCheckbox({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='28'
 			height='28'
 			viewBox='0 0 28 28'

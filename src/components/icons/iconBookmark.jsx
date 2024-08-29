@@ -1,7 +1,8 @@
-export default function IconBookmark({ className }) {
+export default function IconBookmark({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='22'
 			height='28'
 			viewBox='0 0 22 28'

@@ -1,7 +1,8 @@
-export default function IconTask({ className }) {
+export default function IconDocuments({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='15'
 			height='18'
 			viewBox='0 0 15 18'

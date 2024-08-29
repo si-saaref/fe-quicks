@@ -1,7 +1,8 @@
-export default function IconArrow({ className }) {
+export default function IconArrow({ className, onClick }) {
 	return (
 		<svg
-			className={className ?? 'fill-black'}
+			onClick={onClick}
+			className={`fill-black ${className}`}
 			width='32'
 			height='31'
 			viewBox='0 0 32 31'
