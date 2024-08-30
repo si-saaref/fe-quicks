@@ -18,7 +18,7 @@ export default function FloatButton({
 			</button>
 			{withShadowButton && active && (
 				<button
-					className={`rounded-full flex justify-center items-center bg-main-black absolute right-3.5 ${className} !z-10`}
+					className={`rounded-full flex justify-center items-center absolute right-3.5 ${className} !z-10 !bg-main-black`}
 					onClick={onClickShadowButton}
 				/>
 			)}
