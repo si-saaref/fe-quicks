@@ -1,17 +1,16 @@
-import { Dropdown } from 'antd';
-import { hourFormatter } from '../../utils/helper';
+import { useEffect, useState } from 'react';
 import CustomButton from '../atoms/customButton';
 import IconArrow from '../icons/iconArrow';
 import IconClose from '../icons/iconClose';
-import IconDots from '../icons/iconDots';
-import LayoutContent from '../molecules/layoutContent';
 import IconLoader from '../icons/iconLoader';
-import { useEffect, useState } from 'react';
+import CardChatItem from '../molecules/cardChatItem';
+import LayoutContent from '../molecules/layoutContent';
 
 export default function DetailChatSidebar({ handleCloseDetail }) {
 	const [listData, setListData] = useState([]);
 	const [inputMessage, setInputMessage] = useState('');
-	const userName = 'Muhammad';
+	const [messageToReply, setMessageToReply] = useState(null);
+	const userName = 'Muhammad'; // ? This should be from context or userdata
 
 	useEffect(() => {
 		setListData(mockChat);
@@ -26,9 +25,16 @@ export default function DetailChatSidebar({ handleCloseDetail }) {
 			sender: 'Muhammad',
 			message: inputMessage,
 			date: new Date().toISOString(),
+			repliedTo: messageToReply,
 		};
 		setListData([...listData, dataMessage]);
 		setInputMessage('');
+		setMessageToReply(null);
+	};
+
+	const handleClickReply = (idChat) => {
+		const message = listData.find((chat) => chat.id === idChat);
+		setMessageToReply(message);
 	};
 
 	return (
@@ -51,36 +57,12 @@ export default function DetailChatSidebar({ handleCloseDetail }) {
 				{listData.map((chat, idx) => {
 					const itsMe = chat.sender.toLowerCase() === userName.toLowerCase();
 					return (
-						<div className={`w-fit ${itsMe ? 'self-end' : ''} max-w-[85%]`} key={idx + 1}>
-							<div className={`top-section ${itsMe ? 'text-end' : 'text-start'}`}>
-								<h3 className='text-main-purple font-semibold'>{itsMe ? 'You' : chat.sender}</h3>
-							</div>
-							<div
-								className={`bottom-section flex items-start ${
-									itsMe ? 'flex-row' : 'flex-row-reverse'
-								}`}
-							>
-								<div className='option-section p-2 cursor-pointer'>
-									<Dropdown
-										placement='bottomLeft'
-										trigger={['click']}
-										menu={{
-											items,
-											onClick,
-										}}
-										className='drodown-chat-item'
-									>
-										<a onClick={(e) => e.preventDefault()}>
-											<IconDots className='scale-75 fill-main-black' />
-										</a>
-									</Dropdown>
-								</div>
-								<div className='message-section p-[10px] flex flex-col gap-3 rounded-md bg-secondary-purple'>
-									<p>{chat.message}</p>
-									<p>{hourFormatter(chat.date)}</p>
-								</div>
-							</div>
-						</div>
+						<CardChatItem
+							itsMe={itsMe}
+							key={idx + 1}
+							data={chat}
+							onClickReplyChat={handleClickReply}
+						/>
 					);
 				})}
 			</div>
@@ -92,14 +74,35 @@ export default function DetailChatSidebar({ handleCloseDetail }) {
 					</p>
 				</div>
 			</div>
-			<div className='footer-content p-5 flex gap-3'>
-				<input
-					type='text'
-					value={inputMessage}
-					onChange={(e) => setInputMessage(e.target.value)}
-					placeholder='Type a new message'
-					className='w-full px-4 h-[40px] border rounded-md border-main-gray placeholder:text-main-[#333]'
-				/>
+
+			<div className='footer-content p-5 flex gap-3 items-end'>
+				<div className='w-full'>
+					{messageToReply && (
+						<div
+							className={`reply-chat-message-wrapper bg-[#F2F2F2] flex flex-col px-5 py-4 rounded-t-md border border-main-gray border-b-0`}
+						>
+							<div className='header flex justify-between'>
+								<p className='text-main-black font-semibold'>
+									Replying to {messageToReply.sender ?? '-'}
+								</p>
+								<IconClose
+									className='fill-main-black scale-50 cursor-pointer'
+									onClick={() => setMessageToReply(null)}
+								/>
+							</div>
+							<p>{messageToReply?.message ?? '-'}</p>
+						</div>
+					)}
+					<input
+						type='text'
+						value={inputMessage}
+						onChange={(e) => setInputMessage(e.target.value)}
+						placeholder='Type a new message'
+						className={`${
+							messageToReply ? 'rounded-b-md' : 'rounded-md'
+						} w-full px-4 h-[40px] border border-main-gray placeholder:text-main-[#333] focus:outline-none`}
+					/>
+				</div>
 				<CustomButton
 					title='Send'
 					className='min-w-[76px] disabled:bg-main-white disabled:text-main-gray'
@@ -111,65 +114,64 @@ export default function DetailChatSidebar({ handleCloseDetail }) {
 	);
 }
 
-const onClick = (a, b, c, d, e) => {
-	console.log('SEKOP', a, b, c, d, e);
-};
-const items = [
-	{
-		label: <span className='text-main-blue text-base'>Edit</span>,
-		key: 'edit',
-	},
-	{
-		label: <span className='text-[#EB5757] text-base'>Delete</span>,
-		key: 'delete',
-	},
-];
-
 const mockChat = [
 	{
+		id: 1,
 		sender: 'Muhammad',
 		message: 'No worries. It will be completed ASAP. I’ve asked him yesterday.',
 		date: '2024-08-24T23:48:51.774Z',
+		repliedTo: {
+			sender: 'OKRA',
+			message: 'AUU AH GELAP',
+		},
 	},
 	{
+		id: 2,
 		sender: 'Mary Hilda',
 		message:
 			'Hello Obaidullah, I will be your case advisor for case #029290. I have assigned some homework for you to fill. Please keep up with the due dates. Should you have any questions, you can message me anytime. Thanks.',
 		date: '2024-08-24T23:48:51.774Z',
 	},
 	{
+		id: 3,
 		sender: 'Obaidullah Amarkhil',
 		message: 'Morning. I’ll try to do them. Thanks',
 		date: '2024-08-24T23:48:51.774Z',
 	},
 	{
+		id: 4,
 		sender: 'Muhammad',
 		message: 'No worries. It will be completed ASAP. I’ve asked him yesterday.',
 		date: '2024-08-24T23:48:51.774Z',
 	},
 	{
+		id: 5,
 		sender: 'Mary Hilda',
 		message:
 			'Hello Obaidullah, I will be your case advisor for case #029290. I have assigned some homework for you to fill. Please keep up with the due dates. Should you have any questions, you can message me anytime. Thanks.',
 		date: '2024-08-24T23:48:51.774Z',
 	},
 	{
+		id: 6,
 		sender: 'Obaidullah Amarkhil',
 		message: 'Morning. I’ll try to do them. Thanks',
 		date: '2024-08-24T23:48:51.774Z',
 	},
 	{
+		id: 7,
 		sender: 'Muhammad',
 		message: 'No worries. It will be completed ASAP. I’ve asked him yesterday.',
 		date: '2024-08-24T23:48:51.774Z',
 	},
 	{
+		id: 8,
 		sender: 'Mary Hilda',
 		message:
 			'Hello Obaidullah, I will be your case advisor for case #029290. I have assigned some homework for you to fill. Please keep up with the due dates. Should you have any questions, you can message me anytime. Thanks.',
 		date: '2024-08-24T23:48:51.774Z',
 	},
 	{
+		id: 9,
 		sender: 'Obaidullah Amarkhil',
 		message: 'Morning. I’ll try to do them. Thanks',
 		date: '2024-08-24T23:48:51.774Z',

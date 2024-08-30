@@ -16,17 +16,28 @@ export default function ActionFloatButton({ handleChangeTab, currentTab }) {
 		setIsShowListMenu(true);
 	};
 
+	const handleHideSidebar = () => {
+		setIsShowListMenu(false);
+		handleChangeTab('');
+	};
+
 	return (
-		<div className='flex flex-row-reverse absolute bottom-10 right-10 items-center gap-5'>
+		<div
+			className={`flex flex-row-reverse absolute bottom-10 right-10 items-center ${
+				currentTab !== '' ? 'gap-8' : 'gap-6'
+			}`}
+		>
 			<FloatButton
-				className={`${activeButton?.bg} z-10 `}
+				className={`${activeButton?.bg} z-50 w-[68px] h-[68px]`}
 				icon={activeButton?.icon}
-				active
+				withShadowButton
+				active={isShowListMenu && currentTab !== ''}
+				onClickShadowButton={handleHideSidebar}
 				onClick={onClickMenuHome}
 			/>
 			<div
 				className={`${
-					isShowListMenu ? 'flex flex-row-reverse gap-5' : 'absolute right-1 flex h-14'
+					isShowListMenu ? 'flex flex-row-reverse gap-6' : 'absolute right-1 flex h-14'
 				}`}
 			>
 				{currentTab !== 'chat' && (
