@@ -10,7 +10,7 @@ import IconTime from '../icons/iconTime';
 import dayjs from 'dayjs';
 import IconBookmark from '../icons/iconBookmark';
 
-export default function CardTaskItem({ data }) {
+export default function CardTaskItem({ data, handleDeleteItemTask }) {
 	const [isExpandItem, setIsExpandItem] = useState(true);
 	const [valueDesc, setValueDesc] = useState('');
 	const [valueTitle, setValueTitle] = useState('');
@@ -40,13 +40,12 @@ export default function CardTaskItem({ data }) {
 
 	const onClickDropdownOther = ({ key }) => {
 		if (key === 'delete') {
-			console.log(`DELETING ${data?.id}`);
+			handleDeleteItemTask(data?.id);
 		}
 	};
 
 	const onClickDropdownLabel = ({ key }) => {
 		const bookmarLabel = new Set([...valueBookmark, key]);
-		console.log(bookmarLabel);
 		setValueBookmark(bookmarLabel);
 		// setValueBookmark([...valueBookmark, key]);
 	};

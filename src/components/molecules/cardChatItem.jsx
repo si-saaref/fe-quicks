@@ -2,9 +2,9 @@ import { Dropdown } from 'antd';
 import { hourFormatter } from '../../utils/helper';
 import IconDots from '../icons/iconDots';
 
-export default function CardChatItem({ data, itsMe, onClickReplyChat }) {
+export default function CardChatItem({ data, itsMe, onClickReplyChat, handleDeleteMessage }) {
 	const onClickDropdown = ({ key }) => {
-		if (key === 'delete') console.log('DELETING ID Message : ', data.id);
+		if (key === 'delete') handleDeleteMessage(data?.id);
 		if (key === 'edit') console.log('EDITING ID Message : ', data.id);
 		if (key === 'share') console.log('EDITING ID Message : ', data.id);
 		if (key === 'reply') onClickReplyChat(data.id);
@@ -17,7 +17,9 @@ export default function CardChatItem({ data, itsMe, onClickReplyChat }) {
 			} max-w-[85%]`}
 		>
 			<div className={`top-section ${itsMe ? 'text-end' : 'text-start'}`}>
-				<h3 className='text-main-purple font-semibold'>{itsMe ? 'You' : data.sender}</h3>
+				<h3 className={`${getColorChat(data.sender).text} font-semibold`}>
+					{itsMe ? 'You' : data.sender}
+				</h3>
 			</div>
 			{data.repliedTo && (
 				<div className='message-section p-[10px] flex flex-col gap-3 rounded-md bg-[#F2F2F2] border border-main-white w-fit self-end'>
@@ -44,7 +46,11 @@ export default function CardChatItem({ data, itsMe, onClickReplyChat }) {
 						</a>
 					</Dropdown>
 				</div>
-				<div className='message-section p-[10px] flex flex-col gap-3 rounded-md bg-secondary-purple'>
+				<div
+					className={`message-section p-[10px] flex flex-col gap-3 rounded-md ${
+						getColorChat(data.sender).bg
+					}`}
+				>
 					<p>{data.message}</p>
 					<p>{hourFormatter(data.date)}</p>
 				</div>
@@ -75,20 +81,22 @@ const otherItems = [
 	},
 ];
 
-// const getColorChat = (sender) => {
-// 	const listButton = {
-// 		mary_hilda: {
-// 			text: 'bg-main-purple',
-// 			bg: 'bg-secondary-purple',
-// 		},
-// 		obaidullah_amarkhil: {
-// 			text: 'bg-main-orange',
-// 			bg: 'bg-secondary-orange',
-// 		},
-// 		default: {
-// 			text: 'bg-main-blue',
-// 			bg: 'bg-secondary-blue',
-// 		},
-// 	};
-// 	return listButton[activeButton] || listButton.default;
-// };
+// ? Absolutely I can convert this to more flexible, but I hardcoded this due to limitation of user chat
+const getColorChat = (sender) => {
+	const senderName = sender.toLowerCase().replace(' ', '_');
+	const listUser = {
+		mary_hilda: {
+			text: 'text-main-orange',
+			bg: 'bg-secondary-orange',
+		},
+		obaidullah_amarkhil: {
+			text: 'text-main-green',
+			bg: 'bg-secondary-green',
+		},
+		default: {
+			text: 'text-main-purple',
+			bg: 'bg-secondary-purple',
+		},
+	};
+	return listUser[senderName] || listUser.default;
+};

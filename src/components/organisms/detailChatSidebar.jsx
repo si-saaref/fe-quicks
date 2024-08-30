@@ -37,6 +37,11 @@ export default function DetailChatSidebar({ handleCloseDetail }) {
 		setMessageToReply(message);
 	};
 
+	const handleDeleteMessage = (idMessage) => {
+		const listRemainMessage = listData.filter((item) => item.id !== idMessage);
+		setListData(listRemainMessage);
+	};
+
 	return (
 		<LayoutContent className='!p-0 flex flex-col'>
 			<div className='header-content border-b-2 p-6 flex gap-4 items-center w-full'>
@@ -62,6 +67,7 @@ export default function DetailChatSidebar({ handleCloseDetail }) {
 							key={idx + 1}
 							data={chat}
 							onClickReplyChat={handleClickReply}
+							handleDeleteMessage={handleDeleteMessage}
 						/>
 					);
 				})}
@@ -120,10 +126,6 @@ const mockChat = [
 		sender: 'Muhammad',
 		message: 'No worries. It will be completed ASAP. I’ve asked him yesterday.',
 		date: '2024-08-24T23:48:51.774Z',
-		repliedTo: {
-			sender: 'OKRA',
-			message: 'AUU AH GELAP',
-		},
 	},
 	{
 		id: 2,

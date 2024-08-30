@@ -18,6 +18,12 @@ export default function ListTasksSidebar({ loading = false }) {
 		setListData([...listData, {}]);
 	};
 
+	const handleDeleteItemTask = (idTask) => {
+		const listRemainTask = listData.filter((item) => item.id !== idTask);
+
+		setListData(listRemainTask);
+	};
+
 	return (
 		<LayoutContent className='flex flex-col'>
 			<div className='header-content w-full relative flex justify-between py-2'>
@@ -58,15 +64,18 @@ export default function ListTasksSidebar({ loading = false }) {
 						<p className='text-main-black font-semibold'>You have no task active</p>
 					</div>
 				) : (
-					listData.map((task, idx) => <CardTaskItem data={task} key={idx + 1} />)
+					listData.map((task, idx) => (
+						<CardTaskItem data={task} key={idx + 1} handleDeleteItemTask={handleDeleteItemTask} />
+					))
 				)}
 			</div>
 		</LayoutContent>
 	);
 }
 
-const onClick = (a, b, c, d, e) => {
-	console.log('SEKOP', a, b, c, d, e);
+const onClick = ({ key }) => {
+	if (key === 'personal_errands') console.log('TAB PERSONAL ERRAND');
+	if (key === 'urgent_to_do') console.log('TAB URGENT TODO');
 };
 const items = [
 	{
@@ -75,13 +84,13 @@ const items = [
 				Personal Errands
 			</span>
 		),
-		key: 'edit',
+		key: 'personal_errands',
 	},
 	{
 		label: (
 			<span className='text-base block !w-[288px] text-main-black font-semibold'>Urgent To-Do</span>
 		),
-		key: 'delete',
+		key: 'urgent_to_do',
 	},
 ];
 
