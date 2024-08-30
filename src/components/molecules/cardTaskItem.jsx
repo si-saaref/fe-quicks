@@ -8,12 +8,14 @@ import IconFilledCheckbox from '../icons/iconFilledCheckbox';
 import IconPencil from '../icons/iconPencil';
 import IconTime from '../icons/iconTime';
 import dayjs from 'dayjs';
+import IconBookmark from '../icons/iconBookmark';
 
 export default function CardTaskItem({ data }) {
 	const [isExpandItem, setIsExpandItem] = useState(true);
 	const [valueDesc, setValueDesc] = useState('');
 	const [valueTitle, setValueTitle] = useState('');
 	const [valueDatepicker, setValueDatepicker] = useState('');
+	const [valueBookmark, setValueBookmark] = useState([]);
 	const [isCheckedTask, setIsCheckedTask] = useState(false);
 	const [remainingDayTask, setRemainingDayTask] = useState(null);
 
@@ -36,16 +38,90 @@ export default function CardTaskItem({ data }) {
 		setRemainingDayTask(calculateRemainingDueDateDays(isoDate));
 	};
 
-	const onClickDropdown = ({ key }) => {
+	const onClickDropdownOther = ({ key }) => {
 		if (key === 'delete') {
 			console.log(`DELETING ${data?.id}`);
 		}
 	};
 
-	const items = [
+	const onClickDropdownLabel = ({ key }) => {
+		const bookmarLabel = new Set([...valueBookmark, key]);
+		console.log(bookmarLabel);
+		setValueBookmark(bookmarLabel);
+		// setValueBookmark([...valueBookmark, key]);
+	};
+
+	const itemsDropdownOther = [
 		{
 			label: <span className='text-[#EB5757] text-base'>Delete</span>,
 			key: 'delete',
+		},
+	];
+
+	const itemsLabel = [
+		{
+			label: (
+				<span className='text-main-black bg-label-blue text-base px-3 py-2 font-semibold w-full block rounded-md whitespace-nowrap'>
+					Important ASAP
+				</span>
+			),
+			key: 'important_asap',
+		},
+		{
+			label: (
+				<span className='text-main-black bg-label-orange text-base px-3 py-2 font-semibold w-full block rounded-md whitespace-nowrap'>
+					Offline Meeting
+				</span>
+			),
+			key: 'offline_meeting',
+		},
+		{
+			label: (
+				<span className='text-main-black bg-label-yellow text-base px-3 py-2 font-semibold w-full block rounded-md whitespace-nowrap'>
+					Virtual Meeting
+				</span>
+			),
+			key: 'virtual_meeting',
+		},
+		{
+			label: (
+				<span className='text-main-black bg-label-tosca text-base px-3 py-2 font-semibold w-full block rounded-md whitespace-nowrap'>
+					ASAP
+				</span>
+			),
+			key: 'asap',
+		},
+		{
+			label: (
+				<span className='text-main-black bg-label-green text-base px-3 py-2 font-semibold w-full block rounded-md whitespace-nowrap'>
+					Cliend Related
+				</span>
+			),
+			key: 'client_related',
+		},
+		{
+			label: (
+				<span className='text-main-black bg-label-grey text-base px-3 py-2 font-semibold w-full block rounded-md whitespace-nowrap'>
+					Self Task
+				</span>
+			),
+			key: 'self_task',
+		},
+		{
+			label: (
+				<span className='text-main-black bg-label-pink text-base px-3 py-2 font-semibold w-full block rounded-md whitespace-nowrap'>
+					Appointments
+				</span>
+			),
+			key: 'appointments',
+		},
+		{
+			label: (
+				<span className='text-main-black bg-label-navy text-base px-3 py-2 font-semibold w-full block rounded-md whitespace-nowrap'>
+					Court Related
+				</span>
+			),
+			key: 'court_related',
 		},
 	];
 
@@ -105,8 +181,8 @@ export default function CardTaskItem({ data }) {
 						placement='bottomRight'
 						trigger={['click']}
 						menu={{
-							items,
-							onClick: onClickDropdown,
+							items: itemsDropdownOther,
+							onClick: onClickDropdownOther,
 						}}
 						className='drodown-chat-item'
 					>
@@ -141,7 +217,7 @@ export default function CardTaskItem({ data }) {
 									}
 								/>
 							</div>
-							<div className='description-input grid grid-cols-[30px_1fr] gap-3 items-start'>
+							<div className='description-input grid grid-cols-[30px_1fr] gap-3 items-start px-1'>
 								<IconPencil
 									className={`${valueDesc ? 'fill-main-blue' : 'fill-main-gray'} scale-75 mt-1`}
 								/>
@@ -154,6 +230,54 @@ export default function CardTaskItem({ data }) {
 									className='resize-none max-w-[85%] p-2 focus:border-main-gray outline-main-white leading-4'
 								/>
 							</div>
+							<Dropdown
+								placement='bottomLeft'
+								trigger={['click']}
+								menu={{
+									items: itemsLabelBacot.map((item) => ({
+										label: (
+											<span
+												className={`${
+													item.bg
+												} text-main-black text-base px-3 py-2 font-semibold w-full block rounded-md whitespace-nowrap ${
+													Array.from(valueBookmark).includes((key) => key === item.key)
+														? 'border border-main-blue'
+														: ''
+												}`}
+											>
+												{item.name}
+											</span>
+										),
+										key: item.key,
+									})),
+									onClick: onClickDropdownLabel,
+								}}
+								className='drodown-label-item'
+								overlayClassName='dropdown-label-item'
+							>
+								<a onClick={(e) => e.preventDefault()}>
+									<div className='description-input grid grid-cols-[30px_1fr] gap-3 items-start bg-[#F9F9F9] px-2 py-1 rounded-lg w-[95%] cursor-pointer'>
+										<IconBookmark
+											className={`${
+												valueBookmark.length !== 0 ? 'fill-main-blue' : 'fill-main-gray'
+											} scale-75 mt-1`}
+										/>
+										<div className='label-task-item-wrapper flex gap-1 overflow-x-scroll'>
+											{Array.from(valueBookmark).map((key, idx) => {
+												const item = itemsLabelBacot.find((item) => item.key === key);
+												return (
+													<span
+														key={idx + 1}
+														className={`${item.bg} text-main-black text-base px-3 py-2 font-semibold w-fit block rounded-md whitespace-nowrap`}
+													>
+														{item.name}
+													</span>
+												);
+											})}
+										</div>
+									</div>
+								</a>
+							</Dropdown>
 						</>
 					)}
 				</div>
@@ -161,3 +285,46 @@ export default function CardTaskItem({ data }) {
 		</div>
 	);
 }
+
+const itemsLabelBacot = [
+	{
+		bg: 'bg-label-blue',
+		key: 'important_asap',
+		name: 'Important ASAP',
+	},
+	{
+		bg: 'bg-label-orange',
+		name: 'Offline Meeting',
+		key: 'offline_meeting',
+	},
+	{
+		bg: 'bg-label-yellow',
+		name: 'Virtual Meeting',
+		key: 'virtual_meeting',
+	},
+	{
+		bg: 'bg-label-tosca',
+		name: 'ASAP',
+		key: 'asap',
+	},
+	{
+		bg: 'bg-label-green',
+		name: 'Cliend Related',
+		key: 'client_related',
+	},
+	{
+		bg: 'bg-label-grey',
+		name: 'Self Task',
+		key: 'self_task',
+	},
+	{
+		bg: 'bg-label-pink',
+		name: 'Appointments',
+		key: 'appointments',
+	},
+	{
+		bg: 'bg-label-navy',
+		name: 'Court Related',
+		key: 'court_related',
+	},
+];

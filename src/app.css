@@ -10,3 +10,23 @@
 	border-radius: 0 !important;
 	height: 40px;
 }
+
+.dropdown-label-item {
+	min-width: unset !important;
+}
+
+.dropdown-label-item > ul {
+	width: 250px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 10px 0 !important;
+}
+
+.dropdown-label-item .ant-dropdown-menu > :not([hidden]) ~ :not([hidden]) {
+	border-top: none;
+}
+
+.dropdown-label-item .ant-dropdown-menu .ant-dropdown-menu-item:hover {
+	background: transparent;
+}

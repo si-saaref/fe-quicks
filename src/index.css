@@ -18,7 +18,8 @@
 	background: transparent;
 }
 
-textarea::-webkit-scrollbar {
+textarea::-webkit-scrollbar,
+.label-task-item-wrapper::-webkit-scrollbar {
 	display: none;
 }
 
